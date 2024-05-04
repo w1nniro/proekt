@@ -32,8 +32,9 @@ score_pen.speed(0)
 score_pen.color('white')
 score_pen.penup()
 score_pen.setposition(-290, 280)
-scorestring = "Score: %s" %score
+scorestring = "Счёт: %s" %score
 score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
+
 
 #персонаж
 player = turtle.Turtle()
@@ -126,8 +127,6 @@ turtle.onkey(fire,"w")
 #turtle.onkey(close_window, "Escape")
 
 
-
-
 #основной цикл
 while True:
     t=0
@@ -159,6 +158,11 @@ while True:
             x = random.randint(-200, 200)
             y = random.randint(100, 250)
             enemy.setposition(x, y)
+            #обновление счёта
+            score += 10
+            scorestring = "Счёт: %s" %score
+            score_pen.clear()
+            score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
 
         if DTP(player, enemy):
             player.hideturtle()
