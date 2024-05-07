@@ -34,7 +34,7 @@ score_pen.speed(0)
 score_pen.color('white')
 score_pen.penup()
 score_pen.setposition(-290, 280)
-scorestring = "Счёт: %s" %score
+scorestring = "Счёт: {}".format(score)
 score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
 score_pen.hideturtle()
 
@@ -119,13 +119,13 @@ def DTP(t1,t2):
 
 #УПРАВЛЕНИЕ
 #keyboard.read_key()
-turtle.listen()
-turtle.onkey(move_left, "Left")
-turtle.onkey(move_right, "Right")
-turtle.onkey(fire,"space")
-turtle.onkey(move_left, "a")
-turtle.onkey(move_right, "d")
-turtle.onkey(fire,"w")
+wn.listen()
+wn.onkeypress(move_left, "Left")
+wn.onkeypress(move_right, "Right")
+wn.onkeypress(fire,"space")
+wn.onkeypress(move_left, "a")
+wn.onkeypress(move_right, "d")
+wn.onkeypress(fire,"w")
 
 #turtle.onkey(close_window, "Escape")
 
@@ -163,7 +163,7 @@ while True:
             enemy.setposition(x, y)
             #обновление счёта
             score += 10
-            scorestring = "Счёт: %s" %score
+            scorestring = "Счёт: {}".format(score)
             score_pen.clear()
             score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
 
@@ -191,6 +191,3 @@ while True:
         bulletstate="ready"
 
 
-
-
-#turtle.Screen().mainloop() оставить на крайний случай
