@@ -10,6 +10,8 @@ wn = turtle.Screen()
 wn.bgcolor("black")
 wn.title("Space Invaders")
 wn.tracer(0)
+wn.bgpic("SI.gif")
+
 
 
 #Границы квадрата
@@ -34,6 +36,7 @@ score_pen.penup()
 score_pen.setposition(-290, 280)
 scorestring = "Счёт: %s" %score
 score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
+score_pen.hideturtle()
 
 
 #персонаж
