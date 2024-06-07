@@ -2,7 +2,10 @@ import turtle
 import os
 import math
 import random
+import winsound
+
 from playsound import playsound
+import platform
 
 
 #ОКНО
@@ -50,21 +53,31 @@ player.settiltangle(90)
 
 
 #КОЛИЧЕСВТО ПРОТИВНИКОВ
-numbers_of_enemis = 5
+numbers_of_enemis = 30
 enemies = []
 #создание
 for i in range(numbers_of_enemis):
     enemies.append(turtle.Turtle())
+
+
+start_y = 250
+nomer = 0
+
 
 for enemy in enemies:
     enemy.color("red")
     enemy.shape('circle')
     enemy.penup()
     enemy.speed(0)
-    x = random.randint(-200,200)
-    y = random.randint(100, 250)
+    x = -225 + (50*nomer)
+    y = start_y
     enemy.setposition(x, y)
-enemyspeed = 0.1  # СКОРОСТЬ ПРОТИВНИКОВ
+    nomer += 1
+    if nomer == 10:
+        start_y -= 50
+        nomer = 0
+
+enemyspeed = 0.23  # СКОРОСТЬ ПРОТИВНИКОВ
 
 #пуля
 bullet=turtle.Turtle()
@@ -77,7 +90,7 @@ bullet.shapesize(0.5,0.5)
 bullet.hideturtle()
 
 #скорость пресонажа и пули
-bulletspeed=0.5
+bulletspeed = 2
 bulletstate = "ready"
 player_speed = 15
 
@@ -101,7 +114,7 @@ def move_right():
 def fire():
     global  bulletstate
     if bulletstate == "ready":
-        playsound('strel.wav')
+        play_sound("strel.wav")
         bulletstate = "fire"
         #ПЕРЕМЕЩЕНИЕ ПУЛИ ОТ КООРДИНАТ ИГРОКА
         x=player.xcor()
@@ -113,9 +126,14 @@ def fire():
 def DTP(t1,t2):
     distanse = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
     if distanse<15:
-        return  True
+        return True
     else:
         return False
+
+def play_sound(file_path):
+    if platform.system() == 'Windows':
+        import winsound
+        winsound.PlaySound(file_path, winsound.SND_ASYNC)
 
 
 #УПРАВЛЕНИЕ
@@ -159,9 +177,7 @@ while True:
             bulletstate = "ready"
             bullet.setposition(0, -400)
             # ВОЗРАТ ПРОТИВНИКА
-            x = random.randint(-200, 200)
-            y = random.randint(100, 250)
-            enemy.setposition(x, y)
+            enemy.setposition(0,999)
             #обновление счёта
             score += 10
             scorestring = "Счёт: {}".format(score)
