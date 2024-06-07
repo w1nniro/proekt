@@ -2,7 +2,7 @@ import turtle
 import os
 import math
 import random
-import keyboard
+from playsound import playsound
 
 
 #ОКНО
@@ -101,6 +101,7 @@ def move_right():
 def fire():
     global  bulletstate
     if bulletstate == "ready":
+        playsound('strel.wav')
         bulletstate = "fire"
         #ПЕРЕМЕЩЕНИЕ ПУЛИ ОТ КООРДИНАТ ИГРОКА
         x=player.xcor()
