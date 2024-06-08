@@ -3,9 +3,8 @@ import os
 import math
 import random
 import winsound
-
-from playsound import playsound
 import platform
+from playsound import playsound
 
 
 #ОКНО
@@ -14,7 +13,6 @@ wn.bgcolor("black")
 wn.title("Space Invaders")
 wn.tracer(0)
 wn.bgpic("SI.gif")
-
 
 
 #Границы квадрата
@@ -77,7 +75,7 @@ for enemy in enemies:
         start_y -= 50
         nomer = 0
 
-enemyspeed = 0.23  # СКОРОСТЬ ПРОТИВНИКОВ
+enemyspeed = 0.25  # СКОРОСТЬ ПРОТИВНИКОВ
 
 #пуля
 bullet=turtle.Turtle()
@@ -85,7 +83,7 @@ bullet.color('yellow')
 bullet.shape('triangle')
 bullet.penup()
 bullet.speed(0)
-bullet.setheading(90)
+bullet.setheading(0)
 bullet.shapesize(0.5,0.5)
 bullet.hideturtle()
 
@@ -112,7 +110,7 @@ def move_right():
 
 #ФУНКЦИИ ПУЛИ
 def fire():
-    global  bulletstate
+    global bulletstate
     if bulletstate == "ready":
         play_sound("strel.wav")
         bulletstate = "fire"
@@ -125,7 +123,7 @@ def fire():
 #СТОЛКНОВЕНИЕ ПУЛИ И ВРАГОВ
 def DTP(t1,t2):
     distanse = math.sqrt(math.pow(t1.xcor()-t2.xcor(),2)+math.pow(t1.ycor()-t2.ycor(),2))
-    if distanse<15:
+    if distanse < 15:
         return True
     else:
         return False
@@ -137,7 +135,6 @@ def play_sound(file_path):
 
 
 #УПРАВЛЕНИЕ
-#keyboard.read_key()
 wn.listen()
 wn.onkeypress(move_left, "Left")
 wn.onkeypress(move_right, "Right")
@@ -146,8 +143,7 @@ wn.onkeypress(move_left, "a")
 wn.onkeypress(move_right, "d")
 wn.onkeypress(fire,"w")
 
-#turtle.onkey(close_window, "Escape")
-
+kon = 0
 
 #основной цикл
 while True:
@@ -159,30 +155,39 @@ while True:
         x+=enemyspeed
         enemy.setx(x)
         #ОГРАНИЧЕНИЕ ВРАГОВ И ПЕРЕМЕЩЕНИЕ ВПЕРЁД
-        if enemy.xcor() >280:
+        if enemy.xcor() > 280:
             for e in enemies:
                 y = e.ycor()
                 y -= 40
                 e.sety(y)
             enemyspeed *= -1
-        if enemy.xcor() <-280:
+        if enemy.xcor() < -280:
             for e in enemies:
                 y = e.ycor()
-                y-= 40
+                y -= 40
                 e.sety(y)
             enemyspeed *= -1
 
+
         if DTP(bullet, enemy):
+            play_sound("vsriv.wav")
             bullet.hideturtle()
             bulletstate = "ready"
             bullet.setposition(0, -400)
             # ВОЗРАТ ПРОТИВНИКА
-            enemy.setposition(0,999)
+            enemy.setposition(0,1000)
             #обновление счёта
             score += 10
             scorestring = "Счёт: {}".format(score)
             score_pen.clear()
             score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
+
+        for enemy in enemies:
+            if enemy.ycor() < -250:
+                player.hideturtle()
+                enemy.hideturtle()
+                print("Игра окончена")
+                break
 
         if DTP(player, enemy):
             player.hideturtle()
@@ -190,7 +195,7 @@ while True:
             print("Игра окончена")
             break
 
-        def close_window(): #Закрытие программы
+        def close_window():
             turtle.bye()
         screen = turtle.Screen()
         screen.onkey(close_window, "Escape")
