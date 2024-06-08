@@ -4,7 +4,6 @@ import math
 import random
 import winsound
 import platform
-from playsound import playsound
 
 
 #ОКНО
@@ -51,7 +50,7 @@ player.settiltangle(90)
 
 
 #КОЛИЧЕСВТО ПРОТИВНИКОВ
-numbers_of_enemis = 30
+numbers_of_enemis = 1
 enemies = []
 #создание
 for i in range(numbers_of_enemis):
@@ -75,7 +74,7 @@ for enemy in enemies:
         start_y -= 50
         nomer = 0
 
-enemyspeed = 0.25  # СКОРОСТЬ ПРОТИВНИКОВ
+enemyspeed = 0.25 # СКОРОСТЬ ПРОТИВНИКОВ
 
 #пуля
 bullet=turtle.Turtle()
@@ -88,7 +87,7 @@ bullet.shapesize(0.5,0.5)
 bullet.hideturtle()
 
 #скорость пресонажа и пули
-bulletspeed = 2
+bulletspeed = 3.5
 bulletstate = "ready"
 player_speed = 15
 
@@ -143,8 +142,6 @@ wn.onkeypress(move_left, "a")
 wn.onkeypress(move_right, "d")
 wn.onkeypress(fire,"w")
 
-kon = 0
-
 #основной цикл
 while True:
     t=0
@@ -187,13 +184,25 @@ while True:
                 player.hideturtle()
                 enemy.hideturtle()
                 print("Игра окончена")
-                break
+                exit()
 
-        if DTP(player, enemy):
-            player.hideturtle()
-            enemy.hideturtle()
-            print("Игра окончена")
-            break
+        for enemy in enemies:
+            if DTP(player, enemy):
+                player.hideturtle()
+                enemy.hideturtle()
+                print("Игра окончена")
+                exit()
+
+        if score == 10:
+            op = turtle.Turtle()
+            op.speed(0)
+            op.color('white')
+            op.penup()
+            op.setposition(-70, 50)
+            opte = "Вы победили".format(op)
+            op.write(opte, False, align='left', font=('Arial', 18, 'normal'))
+            op.hideturtle()
+
 
         def close_window():
             turtle.bye()
