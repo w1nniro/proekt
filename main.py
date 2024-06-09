@@ -13,6 +13,9 @@ wn.title("Space Invaders")
 wn.tracer(0)
 wn.bgpic("SI.gif")
 
+turtle.register_shape("protiv.gif")
+turtle.register_shape("gamer2.gif")
+
 
 #Границы квадрата
 border_pen = turtle.Turtle()
@@ -42,7 +45,7 @@ score_pen.hideturtle()
 #персонаж
 player = turtle.Turtle()
 player.color("blue")
-player.shape("triangle")
+player.shape("gamer2.gif")
 player.penup()
 player.speed(0)
 player.setposition(0, -250)
@@ -50,7 +53,7 @@ player.settiltangle(90)
 
 
 #КОЛИЧЕСВТО ПРОТИВНИКОВ
-numbers_of_enemis = 1
+numbers_of_enemis = 30
 enemies = []
 #создание
 for i in range(numbers_of_enemis):
@@ -63,7 +66,7 @@ nomer = 0
 
 for enemy in enemies:
     enemy.color("red")
-    enemy.shape('circle')
+    enemy.shape("protiv.gif")
     enemy.penup()
     enemy.speed(0)
     x = -225 + (50*nomer)
@@ -87,7 +90,7 @@ bullet.shapesize(0.5,0.5)
 bullet.hideturtle()
 
 #скорость пресонажа и пули
-bulletspeed = 3.5
+bulletspeed = 3
 bulletstate = "ready"
 player_speed = 15
 
@@ -133,6 +136,7 @@ def play_sound(file_path):
         winsound.PlaySound(file_path, winsound.SND_ASYNC)
 
 
+
 #УПРАВЛЕНИЕ
 wn.listen()
 wn.onkeypress(move_left, "Left")
@@ -142,9 +146,10 @@ wn.onkeypress(move_left, "a")
 wn.onkeypress(move_right, "d")
 wn.onkeypress(fire,"w")
 
+
+
 #основной цикл
 while True:
-    t=0
     wn.update()
     for enemy in enemies:
         #ДВИЖЕНИЕ
@@ -180,7 +185,7 @@ while True:
             score_pen.write(scorestring, False, align='left', font=('Arial', 14, 'normal'))
 
         for enemy in enemies:
-            if enemy.ycor() < -250:
+            if enemy.ycor() < -270:
                 player.hideturtle()
                 enemy.hideturtle()
                 print("Игра окончена")
@@ -193,7 +198,7 @@ while True:
                 print("Игра окончена")
                 exit()
 
-        if score == 10:
+        if score == 300:
             op = turtle.Turtle()
             op.speed(0)
             op.color('white')
@@ -202,13 +207,13 @@ while True:
             opte = "Вы победили".format(op)
             op.write(opte, False, align='left', font=('Arial', 18, 'normal'))
             op.hideturtle()
+            ty = "Вы победили"
 
 
         def close_window():
             turtle.bye()
         screen = turtle.Screen()
         screen.onkey(close_window, "Escape")
-
 
     #ДВИЖЕНИЕ ПУЛИ
     if bulletstate == "fire":
@@ -219,6 +224,4 @@ while True:
     #ГРАНИЦА ИСЧЕЗНОВЕНИЯ ПУЛИ
     if bullet.ycor()>275:
         bullet.hideturtle()
-        bulletstate="ready"
-
-
+        bulletstate = "ready"
