@@ -1,8 +1,5 @@
 import turtle
-import os
 import math
-import random
-import winsound
 import platform
 
 
@@ -80,12 +77,12 @@ for enemy in enemies:
 enemyspeed = 0.25 # СКОРОСТЬ ПРОТИВНИКОВ
 
 #пуля
-bullet=turtle.Turtle()
+bullet = turtle.Turtle()
 bullet.color('yellow')
 bullet.shape('triangle')
 bullet.penup()
 bullet.speed(0)
-bullet.setheading(0)
+bullet.setheading(90)
 bullet.shapesize(0.5,0.5)
 bullet.hideturtle()
 
@@ -117,8 +114,8 @@ def fire():
         play_sound("strel.wav")
         bulletstate = "fire"
         #ПЕРЕМЕЩЕНИЕ ПУЛИ ОТ КООРДИНАТ ИГРОКА
-        x=player.xcor()
-        y=player.ycor() + 10
+        x = player.xcor()
+        y = player.ycor() + 10
         bullet.setposition(x,y)
         bullet.showturtle()
 
@@ -188,15 +185,30 @@ while True:
             if enemy.ycor() < -270:
                 player.hideturtle()
                 enemy.hideturtle()
-                print("Игра окончена")
-                exit()
+                op = turtle.Turtle()
+                op.speed(0)
+                op.color('white')
+                op.penup()
+                op.setposition(-70, 50)
+                opte = "Вы проиграли!".format(op)
+                op.write(opte, False, align='left', font=('Arial', 18, 'normal'))
+                op.hideturtle()
+                ty = "Вы проиграли!"
 
         for enemy in enemies:
             if DTP(player, enemy):
                 player.hideturtle()
                 enemy.hideturtle()
-                print("Игра окончена")
-                exit()
+                op = turtle.Turtle()
+                op.speed(0)
+                op.color('white')
+                op.penup()
+                op.setposition(-70, 50)
+                opte = "Вы проиграли!".format(op)
+                op.write(opte, False, align='left', font=('Arial', 18, 'normal'))
+                op.hideturtle()
+                ty = "Вы проиграли!"
+
 
         if score == 300:
             op = turtle.Turtle()
@@ -204,10 +216,10 @@ while True:
             op.color('white')
             op.penup()
             op.setposition(-70, 50)
-            opte = "Вы победили".format(op)
+            opte = "Вы победили!".format(op)
             op.write(opte, False, align='left', font=('Arial', 18, 'normal'))
             op.hideturtle()
-            ty = "Вы победили"
+            ty = "Вы победили!"
 
 
         def close_window():
